@@ -1,5 +1,5 @@
 import React from "react"
-import { graphql } from "gatsby"
+import { graphql, Link } from "gatsby"
 import Header from "../components/Header"
 
 const Layout = ({ data }) => {
@@ -18,7 +18,7 @@ const Layout = ({ data }) => {
       >
         {edges.map(edge => {
           const { frontmatter } = edge.node
-          return <div key={frontmatter.path}> {frontmatter.title} </div>
+          return <Link to={frontmatter.path}> {frontmatter.title} </Link>
         })}
       </div>
     </div>
