@@ -1,6 +1,47 @@
 const { graphql } = require("gatsby")
 const path = require("path")
 
+const createTagPages = (createPage, posts) => {
+  const allTagsIndexTemplate = path.resolve("src/templates/allTagsIndex.js")
+  const singleTagIndexTemplate = path.resolve("src/templates/singleTagIndex.js")
+
+  const postsByTag = {}
+
+  posts.forEach(({ node }) => {
+    console.log(`tags:${node.frontmatter.tags}`)
+    if (node.frontmatter.tags) {
+      node.frontmatter.tags.forEach(tag => {
+        if (!postsByTag[tag]) {
+          postsByTag[tag] = []
+        }
+        postsByTag[tag].push(node)
+      })
+    }
+  })
+
+  const tags = Object.keys(postsByTag)
+
+  createPage({
+    path: "/tags",
+    component: allTagsIndexTemplate,
+    context: {
+      tags: tags.sort(),
+    },
+  })
+
+  console.log(tags)
+
+  tags.forEach(tag => {
+    createPage({
+      path: `/tags/${tag}`,
+      component: singleTagIndexTemplate,
+      context: {
+        tag: tag,
+      },
+    })
+  })
+}
+
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
@@ -13,6 +54,8 @@ exports.createPages = async ({ graphql, actions }) => {
             node {
               frontmatter {
                 path
+                title
+                tags
               }
             }
           }
@@ -22,8 +65,10 @@ exports.createPages = async ({ graphql, actions }) => {
   )
 
   const posts = result.data.allMarkdownRemark.edges
+
+  createTagPages(createPage, posts)
+
   posts.forEach(({ node }, index) => {
-    console.log(node)
     const path = node.frontmatter.path
     createPage({
       path,

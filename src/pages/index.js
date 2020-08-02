@@ -4,7 +4,6 @@ import Header from "../components/Header"
 
 const Layout = ({ data }) => {
   const { edges } = data.allMarkdownRemark
-  console.log(edges)
   return (
     <div>
       <Header />
