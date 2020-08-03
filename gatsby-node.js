@@ -37,6 +37,7 @@ const createTagPages = (createPage, posts) => {
       component: singleTagIndexTemplate,
       context: {
         tag: tag,
+        posts: postsByTag[tag],
       },
     })
   })

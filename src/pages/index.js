@@ -19,6 +19,10 @@ const Layout = ({ data }) => {
           const { frontmatter } = edge.node
           return <Link to={frontmatter.path}> {frontmatter.title} </Link>
         })}
+
+        <div>
+          <Link to="/tags">Tags</Link>
+        </div>
       </div>
     </div>
   )
