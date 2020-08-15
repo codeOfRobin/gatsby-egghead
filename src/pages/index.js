@@ -4,7 +4,6 @@ import Header from "../components/Header"
 
 const Layout = ({ data }) => {
   const { edges } = data.allMarkdownRemark
-  console.log(edges)
   return (
     <div>
       <Header />
@@ -20,6 +19,10 @@ const Layout = ({ data }) => {
           const { frontmatter } = edge.node
           return <Link to={frontmatter.path}> {frontmatter.title} </Link>
         })}
+
+        <div>
+          <Link to="/tags">Tags</Link>
+        </div>
       </div>
     </div>
   )

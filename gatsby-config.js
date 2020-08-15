@@ -17,6 +17,20 @@ module.exports = {
     {
       resolve: `gatsby-transformer-remark`,
     },
+    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        plugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 590,
+            },
+          },
+        ],
+      },
+    },
   ],
   siteMetadata: {
     title: "My Blog",
